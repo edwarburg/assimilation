@@ -1,0 +1,64 @@
+:- ['lastof.swipl'].
+:- ['properties.swipl'].
+:- ['entailment.swipl'].
+
+/* Choose the right allomorph of -s given a word */
+make_S(Word, Allomorph) :-
+	lastof(Word, C),
+	(
+	 /* If the word ends in a coronal sibilant,
+		give is /ɪz/ */
+	 (sib(C), cor(C) ->
+	     Allomorph = [ɪ,z]);
+
+	 /* else give it the correct /s/ or /z/
+	    depending on voicing */
+	 (true ->
+	     sib(S), cor(S), alv(S), /* S is an /s/ or a /z/ */
+	     (voi(C) <=> voi(S)),
+	     Allomorph = [S]) /* give the voiced /z/, the voiceless /s/ */
+	).
+
+
+/* Choose the right allomorph of -ed given a word */
+make_ED(Word, Allomorph) :-
+	lastof(Word, C),
+	(
+	 /* Anything that ends in an alveolar stop gets /ɪd/ */
+	 ((alv(C), not(cnt(C)), not(sib(C)), not(nas(C))) ->
+	     Allomorph = [ɪ, d]);
+
+	 /* Anything else gets a /t/ or /d/ based on voicing */
+	 (true ->
+	    alv(T), not(cnt(T)), not(sib(T)), not(nas(T)),
+	    (voi(C) <=> voi(T)),
+	    Allomorph = [T])
+	).
+
+
+/* apr = approximant */
+apr(l).
+apr(ɹ).
+
+/* Choose the right allomorph or in- given a word.
+   Possibilities are il-, ir-, im-, in- */
+make_IN(Word, Allomorph) :-
+	Word = [C | _],
+	(
+	 /* l */
+	 (apr(C), pal(C) -> 
+	     apr(N), pal(N));
+
+	 /* ɹ */
+	 (apr(C), alv(C), not(pal(C)) -> 
+	   (apr(N), alv(N), not(pal(N))));
+
+	 /* labials get an m */
+	 (lab(C) -> 
+	     lab(N), nas(N));
+
+	 /* everything else gets an n */
+	 (true -> 
+	     nas(N), alv(N))
+	),	
+	Allomorph = [ɪ,N].

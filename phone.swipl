@@ -1,0 +1,124 @@
+/***************************************************************
+
+Title: phone.swipl
+
+Author: Almerindo E. Ojeda
+
+Type: Prolog
+
+Implementation: SWI-Prolog 5.6.64
+
+Description: This set of rules generates the phones of English
+in phonetic transcription. These rules involve the built-in pr
+edicate 'name', which relates a character and its decimal unic
+ode value.  To synthesize phones, enter (1) and semicolons; to 
+analyze them, enter specific queries--say (2a) or (2b).
+
+(1)	phone(Phone).
+(2)	a.	phone(g).
+	b.	phone(7).
+
+***************************************************************/
+:- ['fulldisplay.swipl'].
+
+phone(A):-
+	name(A,[112]).
+
+phone(A):-
+	name(A,[098]).
+
+phone(A):-
+	name(A,[109]).
+
+phone(A):-
+	name(A,[116]).
+
+phone(A):-
+	name(A,[100]).
+
+phone(A):-
+	name(A,[110]).
+
+phone(A):-
+	name(A,[107]).
+
+phone(A):-
+	name(A,[103]).
+
+phone(A):-
+	name(A,[331]).
+
+phone(A):-
+	name(A,[102]).
+
+phone(A):-
+	name(A,[118]).
+
+phone(A):-
+	name(A,[952]).
+ 
+phone(A):-
+	name(A,[240]).
+ 
+phone(A):-
+	name(A,[115]).
+
+phone(A):-
+	name(A,[122]).
+
+phone(A):-
+	name(A,[643]).
+
+phone(A):-
+	name(A,[658]).
+ 
+phone(A):-
+	name(A,[269]).
+
+phone(A):-
+	name(A,[496]).
+
+phone(A):-
+	name(A,[108]).
+
+phone(A):-
+	name(A,[633]).
+
+phone(A):-
+	name(A,[106]).
+
+phone(A):-
+	name(A,[119]).
+
+phone(A):-
+	name(A,[104]).
+
+phone(A):-
+	name(A,[105]).
+
+phone(A):-
+	name(A,[618]).
+
+phone(A):-
+	name(A,[101]).
+
+phone(A):-
+	name(A,[230]).
+
+phone(A):-
+	name(A,[117]).
+
+phone(A):-
+	name(A,[650]).
+ 
+phone(A):-
+	name(A,[111]).
+
+phone(A):-
+	name(A,[097]).
+ 
+phone(A):-
+	name(A,[601]).
+
+phone(A):-
+	name(A,[652]).

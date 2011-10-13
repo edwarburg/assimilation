@@ -1,0 +1,2 @@
+lastof(A, B) :-
+	append(_, [B], A).

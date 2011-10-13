@@ -1,0 +1,22 @@
+lexicon([d,a,g],   [noun, sing]).
+lexicon([k,æ,t],   [noun, sing]).
+lexicon([h,o,ɹ,s], [noun, sing]).
+lexicon([f,ɪ,ʃ],   [noun, sing]).
+lexicon([m,u,s],   [noun, sing]).
+
+lexicon([b,æ,n],   [verb, inf]).
+lexicon([b,e,g],   [verb, inf]).
+lexicon([f,æ,k,s], [verb, inf]).
+lexicon([ɪ,č],     [verb, inf]).
+lexicon([h,ɪ,t],   [verb, inf]).
+lexicon([p,ʊ,t],   [verb, inf]).
+lexicon([b,i],     [verb, inf]).
+
+lexicon([p,e,j,ʃ,ɪ,n,t],     [adj]).
+lexicon([p,a,ɹ,ʃ,ə,l],       [adj]).
+lexicon([l,e,g,ɪ,t,ɪ,m,e,t], [adj]).
+lexicon([ɹ,e,g,j,u,l,ə,ɹ],   [adj]).
+lexicon([k,e,j,p,ə,b,ə,l],   [adj]).
+lexicon([g,l,o,ɹ,i,ə,s],     [adj]).
+lexicon([e,j,b,ə,l],         [adj]).
+lexicon([d,i,s,e,n,t],       [adj]).

@@ -1,0 +1,114 @@
+/*
+  Author: Eric Warburg
+  
+  The purpose of this program is to model a subset of
+  English allomorphy rules, and to do so principled manner.
+  It simulates assimilation in several different
+  contexts, such as pluralization and verb conjugation.
+  It does this by appending an underspecified
+  allomorph to the word, and then using helper rules
+  to choose the correct morph given the context. Except for
+  the irregular words, the allomorph is selected on
+  phonological similarity, and not in an ad hoc manner.
+  The relations beginning with "make_" demonstrate the
+  underlying requirement of assimilation, the
+  homorganicity of the last phone of the stem and first phone
+  of the affix, or vice versa.
+*/
+
+/*
+  TEST: Consult this file and run the following:
+  findall(A, english(A, [noun, plural]), X).
+  findall(B, english(B, [verb, tpspr]), Y).
+  findall(C, english(C, [verb, tpspa]), Z).
+  findall(D, english(D, [adj, neg]), W).
+*/
+
+/* Pick up our lexicon */
+:- ['lexicon.swipl'].
+/* Morph building relations */
+:- ['buildmorph.swipl'].
+
+english(A, B) :-
+	lexicon(A, B).
+
+/* Plural */
+english(Plural, [noun, plural]) :-
+	pluralize(_, Plural).
+
+/* Third person singular present */
+english(TPSPr, [verb, tpspr]) :-
+	conj_TPSPr(_, TPSPr).
+
+/* Third person singular past */
+english(TPSPa, [verb, tpspa]) :-
+	conj_TPSPa(_, TPSPa).
+
+/* Negation of adjectives */
+english(Negative, [adj, neg]) :-
+	negate(_, Negative).
+
+
+/* Relate an english Word to its Plural */
+pluralize(Word, Plural) :-
+	english(Word, [noun, sing]),
+	/* Cascading if/else. If the word doesn't
+	   match the current case, try it against
+	   the next one.  */
+	(
+	 /* special case: moose takes the null morph */
+	 (Word = [m,u,s] ->
+	     Allomorph = []);
+
+	 /* Otherwise, use the make_S rule to choose
+		the right non-null allomorph of -s */
+	 (true ->
+	     make_S(Word, Allomorph))
+	),
+	append(Word, Allomorph, Plural).
+	
+
+/* Conjugate the third person singular present. */
+conj_TPSPr(Word, TPSPr) :-
+	english(Word, [verb, inf]),
+	(
+	 /* Special case: be -> is */
+	 (Word = [b,i] ->
+	    TPSPr = [ɪ, z]);
+	 (true ->
+	    /* otherwise, choose an -s */
+	    make_S(Word, Allomorph),
+	    append(Word, Allomorph, TPSPr))
+	).
+
+/* Conjugate third person singlar past */
+conj_TPSPa(Word, TPSPa) :-
+	english(Word, [verb, inf]),	
+	(
+	 /* Special case: be -> was */
+	 (Word = [b,i] ->
+	    TPSPa = [w,ʌ,z]);
+	 (
+	   (
+	    /* Special cases: hit and put both
+		   take the null morph */
+	    ((Word = [h,ɪ,t]; Word = [p,ʊ,t]) ->
+	        Allomorph = []);
+	 
+		/* otherwise, add the correct non-null
+		   allomorph of -ed*/
+	    (true ->
+    	    make_ED(Word, Allomorph))
+	  
+	   ),
+	   append(Word, Allomorph, TPSPa)
+	 )
+	).
+
+
+/* Make the negative form of an adjective */
+negate(Word, Negation) :-
+	english(Word, [adj]),
+	make_IN(Word, Allomorph),
+	append(Allomorph, Word, Negation).
+
