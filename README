@@ -1,0 +1,8 @@
+This is a project I did for a computational linguistics course. A summary, taken from main.swipl:
+
+"The purpose of this program is to model a subset of
+  English allomorphy rules, and to do so principled manner.
+  It simulates assimilation in several different
+  contexts, such as pluralization and verb conjugation."
+
+Some files were supplied by the professor: entailment.swipl, fulldisplay.swipl, fullproperties.swipl, phone.swipl, and properties.swipl. All others were written by me.
